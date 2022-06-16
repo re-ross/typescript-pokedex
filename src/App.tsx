@@ -14,8 +14,8 @@ const App = () => {
 export default App;
 
 const Container = styled.div`
-  background-color: #f1f5e6;
   height: 150vh;
+  margin-left: 100px;
 `;
 
 const Wrapper = styled.div`

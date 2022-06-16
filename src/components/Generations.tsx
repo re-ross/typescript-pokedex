@@ -35,9 +35,9 @@ export const Generations = ({ updateGen }: GenProps) => {
 
 const Container = styled.div`
   position: absolute;
-  /* z-index: 999;
+  z-index: 999;
   left: -129px;
-  top: 70px; */
+  top: 70px;
 `;
 
 const ListContainer = styled.ul`
@@ -47,7 +47,7 @@ const ListContainer = styled.ul`
 const ListItem = styled.li`
   list-style-type: none;
   margin-top: 90px;
-  margin-left: -3px;
+  margin-left: 1px;
   transform: rotate(-90deg);
   padding: 5px 30px;
   background-color: #ff0050;
