@@ -55,7 +55,7 @@ export const Pokedex = () => {
           types: res.types,
         });
 
-        setDisplayCard(!displayCard);
+        setDisplayCard(true);
       })
       .catch((err) => console.log(err));
   };
@@ -105,7 +105,11 @@ export const Pokedex = () => {
         </Column>
         <Column>
           <RightPanel>
-            {displayCard ? <PokemonCard /> : <Welcome />}
+            {displayCard ? (
+              <PokemonCard currentPokemon={currentPokemon} />
+            ) : (
+              <Welcome />
+            )}
             <Box>Party</Box>
           </RightPanel>
         </Column>

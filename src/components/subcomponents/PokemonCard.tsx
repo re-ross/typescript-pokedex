@@ -1,44 +1,54 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { CurrentPokemonProps, Pokemon } from "../../types";
 
-export const PokemonCard = () => {
+export const PokemonCard = ({ currentPokemon }: CurrentPokemonProps) => {
+  const { id, name, abilities, img, stats, types } = currentPokemon;
   return (
     <Container>
       <Box1>
         <Box2>
-          <Subheader>name</Subheader>
-          <Span> type</Span>
+          <Subheader>{name}</Subheader>
+          {types.map((pokemon) => (
+            <Types key={pokemon.type.name}>{pokemon.type.name}</Types>
+          ))}
         </Box2>
         <SmlScreen>
           <Button></Button>
           <Row>
             <Column1>
-              <Image />
+              <Image src={img.front_default} alt={name} />
             </Column1>
             <Column2>
               <Box3>
-                <Title>Stats</Title>
+                <Title>{}</Title>
                 <ListContainer>
-                  <ListItem>
-                    <Span></Span>
-                  </ListItem>
+                  {stats.map((pokemon: Pokemon | any) => (
+                    <ListItem key={pokemon.stat.name}>
+                      <Span>
+                        {pokemon.stat.name}: {pokemon.base_stat}
+                      </Span>
+                    </ListItem>
+                  ))}
                 </ListContainer>
               </Box3>
             </Column2>
           </Row>
-          <Span2>ID:</Span2>
+          <Span2>ID: {id}</Span2>
         </SmlScreen>
         <Row2>
           <Column3>
-            <Title>Abilities</Title>
+            <Title>Abilities:</Title>
             <ListContainer>
-              <ListItem2></ListItem2>
+              {abilities.map((ability, i) => {
+                return <ListItem key={i}>{ability.ability.name}</ListItem>;
+              })}
             </ListContainer>
           </Column3>
         </Row2>
         <Row2>
           <Box4>
-            <Title>Moves</Title>
+            <Title style={{ marginLeft: 20 }}>Moves:</Title>
           </Box4>
         </Row2>
       </Box1>
@@ -55,7 +65,7 @@ const Container = styled.div`
 
 const Box1 = styled.div`
   padding: 30px 10px;
-  background-color: #f4442e;
+  background-color: #f1f5e6;
   border: 2px solid #1f1a38;
   border-radius: 15px;
 `;
@@ -98,6 +108,7 @@ const Span2 = styled.span`
 `;
 
 const SmlScreen = styled.div`
+  border: 2px solid #1f1a38;
   background: repeating-linear-gradient(
     45deg,
     #1fb0ff,
@@ -164,10 +175,15 @@ const ListContainer = styled.ul``;
 
 const ListItem = styled.li`
   list-style-type: none;
-  color: white;
+
   text-align: left;
   font-weight: bold;
   text-transform: uppercase;
 `;
 
-const ListItem2 = styled.li``;
+const Types = styled.div`
+  text-align: center;
+  font-size: 1rem;
+  display: block;
+  text-transform: capitalize;
+`;

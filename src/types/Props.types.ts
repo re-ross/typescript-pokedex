@@ -7,16 +7,20 @@ export type GenProps = {
 export type Pokemon = {
   id: number;
   name: string;
-  abilities: Array<Object>;
-  moves: Array<Object>;
-  img: string;
-  stats: Array<Object>;
-  types: Array<Object>;
+  abilities: Array<any>;
+  moves: Array<any>;
+  img: any;
+  stats: Array<any>;
+  types: Array<any>;
 };
 
 export type PokemonProps = {
   pokemon: Pokemon;
   renderCard: (params: any) => any;
+};
+
+export type CurrentPokemonProps = {
+  currentPokemon: Pokemon;
 };
 
 export type SearchBarProps = {
