@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
+import { SearchBarProps } from "../types";
 
-export const SearchBar = () => {
+export const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
   return (
     <Wrapper>
       <Icon></Icon>
-      <SearchInput type="text" />
+      <SearchInput
+        type="text"
+        onChange={(e) => setSearchQuery(e.target.value)}
+        value={searchQuery}
+      />
     </Wrapper>
   );
 };
