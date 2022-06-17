@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MouseEvent, GenProps } from "../types";
+import { MouseEvent, GenProps } from "../../types";
 
 export const Generations = ({ updateGen }: GenProps) => {
   const updateGenHandler = (e: MouseEvent) => {
@@ -50,11 +50,11 @@ const ListItem = styled.li`
   margin-left: 1px;
   transform: rotate(-90deg);
   padding: 5px 30px;
-  background-color: #ff0050;
+  background-color: #f4442e;
   border-radius: 30px 30px 0px 0px;
-  border: 2px solid #4f045a;
+  border: 2px solid #1f1a38;
   &:active {
-    background-color: #dc0059;
+    background-color: #c2200a;
   }
 `;
 
@@ -62,4 +62,5 @@ const Button = styled.button`
   background-color: transparent;
   border: none;
   color: white;
+  cursor: pointer;
 `;

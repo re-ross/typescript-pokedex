@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PokemonProps } from "../types";
+import { PokemonProps } from "../../types";
 
 export const PokemonButton = ({ pokemon, renderCard }: PokemonProps) => {
   const handleClick = () => {

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
-import { SearchBarProps } from "../types";
+import { SearchBarProps } from "../../types";
 
 export const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
   return (
@@ -31,5 +31,5 @@ const SearchInput = styled.input`
   background-color: transparent;
   border: none;
   color: #4f045a;
-  border-bottom: 2px solid #4f045a;
+  border-bottom: 2px solid #1f1a38;
 `;

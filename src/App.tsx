@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Pokedex } from "./components";
+import { Pokedex } from "./components/Pokedex";
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 75%;
   padding: 0px 15px 0px 15px;
   margin-right: auto;
   margin-left: auto;
