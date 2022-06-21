@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Generations } from "./Generations";
 import { generations, GenType } from "../data";
-import { LeftHeader } from "./LeftHeader";
-import { SearchBar } from "./SearchBar";
 import { Pokemon } from "../types";
-import { PokemonButton } from "./PokemonButton";
+import {
+  PokemonCard,
+  PokemonButton,
+  Generations,
+  LeftHeader,
+  SearchBar,
+  Welcome,
+} from "./subcomponents";
 
 export const Pokedex = () => {
   const [generation, setGeneration] = useState("gen1");
@@ -21,6 +25,7 @@ export const Pokedex = () => {
     types: [],
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [displayCard, setDisplayCard] = useState(false);
 
   const getPokemon = (gen: string) => {
     axios
@@ -49,6 +54,8 @@ export const Pokedex = () => {
           stats: res.stats,
           types: res.types,
         });
+
+        setDisplayCard(true);
       })
       .catch((err) => console.log(err));
   };
@@ -69,7 +76,7 @@ export const Pokedex = () => {
       <Generations updateGen={updateGen} />
       <Row>
         <Column>
-          <Panel>
+          <LeftPanel>
             <Container2>
               <LeftHeader />
               <Container3>
@@ -94,7 +101,16 @@ export const Pokedex = () => {
                 </LrgScreen>
               </Container3>
             </Container2>
-          </Panel>
+          </LeftPanel>
+        </Column>
+        <Column>
+          <RightPanel>
+            {displayCard ? (
+              <PokemonCard currentPokemon={currentPokemon} />
+            ) : (
+              <Welcome />
+            )}
+          </RightPanel>
         </Column>
       </Row>
     </Container>
@@ -116,22 +132,32 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
-  position: 0;
+  padding: 0;
 `;
 
-const Panel = styled.div`
-  background-color: #ff0050;
-  border: 2px solid #4f045a;
+const LeftPanel = styled.div`
+  background-color: #f4442e;
+  border: 2px solid #1f1a38;
   border-radius: 50px 0px 0px 50px;
   padding: 30px;
   position: relative;
-  box-shadow: 5px 10px 15px #4f045a;
+  box-shadow: 5px 10px 15px #1f1a38;
+  height: 1000px;
+`;
+const RightPanel = styled.div`
+  background-color: #f4442e;
+  border: 2px solid #1f1a38;
+  border-radius: 0px 50px 50px 0px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 5px 10px 15px #1f1a38;
+  height: 1000px;
 `;
 
 const Container2 = styled.div`
   position: relative;
   padding: 20px;
-  border: 3px solid #4f045a;
+  border: 3px solid #1f1a38;
   border-radius: 30px 0px 0px 15px;
   height: 950px;
 `;
@@ -139,8 +165,8 @@ const Container2 = styled.div`
 const Container3 = styled.div`
   padding: 50px 10px;
   margin-top: 110px;
-  background-color: #f1f5e6;
-  border: 2px solid #4f045a;
+  background-color: #f4f4f4;
+  border: 2px solid #1f1a38;
   border-radius: 30px;
 `;
 
@@ -149,12 +175,12 @@ const LrgScreen = styled.div`
   height: 400px;
   background: repeating-linear-gradient(
     45deg,
-    #14daff,
-    #14daff 80px,
-    #14eaff 80px,
-    #14eaff 160px
+    #1fb0ff,
+    #1fb0ff 80px,
+    #009ff5 80px,
+    #009ff5 160px
   );
-  border: 2px solid #4f045a;
+  border: 2px solid #1f1a38;
 `;
 
 const ResultsContainer = styled.div`

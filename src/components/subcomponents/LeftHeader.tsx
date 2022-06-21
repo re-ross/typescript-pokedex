@@ -16,8 +16,8 @@ const Container = styled.div`
   border-radius: 50px 0px 0px 0px;
   width: 116%;
   height: 100px;
-  box-shadow: 1px 2px 5px #4f045a;
-  background: #ff0050;
+  box-shadow: 1px 2px 5px #1f1a38;
+  background: #f4442e;
 `;
 
 const Wrapper = styled.div`
