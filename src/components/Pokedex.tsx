@@ -110,7 +110,6 @@ export const Pokedex = () => {
             ) : (
               <Welcome />
             )}
-            <Box>Party</Box>
           </RightPanel>
         </Column>
       </Row>
@@ -190,16 +189,4 @@ const ResultsContainer = styled.div`
   color: white;
   font-size: 3rem;
   margin-top: 6rem;
-`;
-
-const Box = styled.div`
-  text-align: center;
-  color: white;
-  font-size: 35px;
-  position: absolute;
-  bottom: 20px;
-  left: 0px;
-  right: 0px;
-  margin: 0% 25% 0% 25%;
-  width: 50%;
 `;

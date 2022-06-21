@@ -1,9 +1,53 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { MovesTable } from ".";
 import { CurrentPokemonProps, Pokemon } from "../../types";
 
 export const PokemonCard = ({ currentPokemon }: CurrentPokemonProps) => {
   const { id, name, abilities, img, stats, types } = currentPokemon;
+  const [abilityDesc, setAbilityDesc] = useState("");
+  const [moveStats, setMoveStats] = useState([] as any);
+
+  useEffect(() => {
+    Promise.all(
+      abilities.map((ability) => {
+        return axios.get(ability.ability.url);
+      })
+    ).then((values) => {
+      let enVals: String | any = values.map(
+        (value) =>
+          value.data.effect_entries.filter(
+            (entry: string | any) => entry.language.name === "en"
+          )[0].short_effect
+      );
+      setAbilityDesc(enVals);
+    });
+  }, [abilities]);
+
+  useEffect(() => {
+    const { moves } = currentPokemon;
+    if (moveStats.length > 0) return;
+    Promise.all(
+      moves.slice(0, 4).map((move) => {
+        return axios.get(move.move.url);
+      })
+    ).then((values) => {
+      setMoveStats(
+        values.map((value) => ({
+          name: value.data.name,
+          damage_class: value.data.damage_class.name,
+          accuracy: value.data.accuracy,
+          power: value.data.power,
+        }))
+      );
+    });
+  }, [currentPokemon, moveStats]);
+
+  useEffect(() => {
+    setAbilityDesc("");
+    setMoveStats([]);
+  }, [id]);
   return (
     <Container>
       <Box1>
@@ -14,7 +58,6 @@ export const PokemonCard = ({ currentPokemon }: CurrentPokemonProps) => {
           ))}
         </Box2>
         <SmlScreen>
-          <Button></Button>
           <Row>
             <Column1>
               <Image src={img.front_default} alt={name} />
@@ -41,7 +84,11 @@ export const PokemonCard = ({ currentPokemon }: CurrentPokemonProps) => {
             <Title>Abilities:</Title>
             <ListContainer>
               {abilities.map((ability, i) => {
-                return <ListItem key={i}>{ability.ability.name}</ListItem>;
+                return (
+                  <ListItem key={i}>
+                    {ability.ability.name}: {abilityDesc[i]}
+                  </ListItem>
+                );
               })}
             </ListContainer>
           </Column3>
@@ -49,6 +96,7 @@ export const PokemonCard = ({ currentPokemon }: CurrentPokemonProps) => {
         <Row2>
           <Box4>
             <Title style={{ marginLeft: 20 }}>Moves:</Title>
+            <MovesTable moveStats={moveStats} />
           </Box4>
         </Row2>
       </Box1>
@@ -57,6 +105,7 @@ export const PokemonCard = ({ currentPokemon }: CurrentPokemonProps) => {
 };
 
 const Container = styled.div`
+  margin-top: 20px;
   width: 100%;
   padding: 0px 15px 0px 15px;
   margin-right: auto;
@@ -101,10 +150,10 @@ const Span = styled.span`
 `;
 
 const Span2 = styled.span`
-  float: right;
   font-size: 1rem;
   display: block;
   text-transform: white;
+  margin-left: 5px;
 `;
 
 const SmlScreen = styled.div`
@@ -118,18 +167,18 @@ const SmlScreen = styled.div`
   );
 `;
 
-const Button = styled.button`
-  float: left;
-  color: white;
-  margin: 5px 0px 0px 5px;
-  background-color: #ff9f1c;
-  border: none;
-  padding: 10px;
-  border-radius: 15px;
-  &:disabled {
-    background-color: grey;
-  }
-`;
+// const Button = styled.button`
+//   float: left;
+//   color: white;
+//   margin: 5px 0px 0px 5px;
+//   background-color: #ff9f1c;
+//   border: none;
+//   padding: 10px;
+//   border-radius: 15px;
+//   &:disabled {
+//     background-color: grey;
+//   }
+// `;
 
 const Row = styled.div`
   display: flex;
@@ -174,11 +223,13 @@ const Title = styled.span`
 const ListContainer = styled.ul``;
 
 const ListItem = styled.li`
-  list-style-type: none;
-
+  /* list-style-type: none; */
   text-align: left;
   font-weight: bold;
   text-transform: uppercase;
+  font: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 `;
 
 const Types = styled.div`
